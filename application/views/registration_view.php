@@ -17,7 +17,7 @@
         <input style="--order: 3" type="email" name="email" id="email" placeholder="Email" required>
         <span style="--order: 4" class="unselectable">Minimum eight characters, at least one letter and one number</span>
         <input style="--order: 4" type="password" name="password" id="password" placeholder="Password" pattern='^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$' tooltip=" sd" required>
-        <input style="--order: 5" type="password" name="conpassword" id="conpassword" placeholder="Confirm passwordd" pattern="^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$" required>
+        <input style="--order: 5" type="password" name="conpassword" id="conpassword" placeholder="Confirm password" pattern="^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$" required>
         <div class="submit" style="--order: 6"><input type="submit" name="reg" value="Join"></div>
     </form>
     <div class="other">

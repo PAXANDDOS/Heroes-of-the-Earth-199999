@@ -1,7 +1,6 @@
 <style>@import url('/assets/css/board.css');</style>
 <style>@import url('/assets/css/board_enemy.css');</style>
 <style>@import url('/assets/css/board_player.css');</style>
-<script src="/assets/js/vanilla-tilt.js" defer></script>
 <style>@import url('/assets/css/search.css');</style>
 <div class="searchScreen window unselectable">
 	<div class="searchAnim">

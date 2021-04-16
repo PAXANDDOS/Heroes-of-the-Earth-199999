@@ -41,6 +41,20 @@ window.addEventListener('DOMContentLoaded', function () {
                 item = document.querySelector('.enemy_handInner');
                 while (item.firstChild)
                     item.removeChild(item.firstChild);
+                
+                item = document.querySelector('head');
+                item.removeChild(item.lastChild);
+
+                if(players[0].canPlay == false) {
+                    document.getElementById('endturn').style.backgroundImage = "url('/assets/images/enemyTurn.png')";
+                    document.getElementsByClassName('player_board')[0].style.filter = "brightness(0.7)";
+                    document.getElementsByClassName('player_board')[0].style.webkitFilter = "brightness(0.7)";
+                }
+                else {
+                    document.getElementById('endturn').style.backgroundImage = "url('/assets/images/endturn.png')";
+                    document.getElementsByClassName('player_board')[0].style.filter = "brightness(1)";
+                    document.getElementsByClassName('player_board')[0].style.webkitFilter = "brightness(1)";
+                }
 
                 render(players);
             }
@@ -105,11 +119,11 @@ window.addEventListener('DOMContentLoaded', function () {
         document.getElementById('enemy_currentStones').innerHTML = players[1].mana;
         document.getElementById('enemy_currentHealth').innerHTML = players[1].health;
         for(let i = 0; i < players[1].cards.length; i++) {
-            let card = `<div class="enemy_handCard" data-tilt data-tilt-reverse="true" data-tilt-max="15" data-tilt-scale="1.2"></div>`;
+            let card = `<div class="enemy_handCard"></div>`;
             document.getElementsByClassName('enemy_handInner')[0].insertAdjacentHTML('beforeend',card);
         }
         for(let i = 0; i < players[1].usedCards.length; i++) {
-            let card = `<div class="entity_card enemyUsedCards" value=`+i+` data-tilt data-tilt-reverse="true" data-tilt-max="15" data-tilt-scale="1.2">
+            let card = `<div class="entity_card enemyUsedCards" value=`+i+`>
             <img src="/assets/images/cards/`+players[1].usedCards[i].images+`" alt="enemyCard">
             <span id="card_currentAttack">`+players[1].usedCards[i].attack+`</span>
             <span id="card_currentDefense">`+players[1].usedCards[i].defence+`</span>
@@ -130,19 +144,25 @@ window.addEventListener('DOMContentLoaded', function () {
             };
         }
         for(let i = 0; i < players[0].usedCards.length; i++) {
+            let canAttack = " class='cardCanNotAttack' ";
+            if(players[0].usedCards[i].canAtack == true && players[0].canPlay == true) 
+                canAttack = " class='cardCanAttack' ";
+            
             let card = `<div class="entity_card playerUsedCards" value=`+i+` data-tilt data-tilt-reverse="true" data-tilt-max="15" data-tilt-scale="1.2">
-            <img src="/assets/images/cards/`+players[0].usedCards[i].images+`" alt="enemyCard">
+            <img `+canAttack+`src="/assets/images/cards/`+players[0].usedCards[i].images+`" alt="enemyCard">
             <span id="card_currentAttack">`+players[0].usedCards[i].attack+`</span>
             <span id="card_currentDefense">`+players[0].usedCards[i].defence+`</span>
             </div>`;
             document.getElementsByClassName('player_deck')[0].insertAdjacentHTML('beforeend',card);
             document.getElementsByClassName('playerUsedCards')[i].onclick = function () {
-                currentCardId = document.getElementsByClassName('playerUsedCards')[i].getAttribute("value");
-                console.log(currentCardId);
+                if(players[0].usedCards[i].canAtack == true) {
+                    currentCardId = document.getElementsByClassName('playerUsedCards')[i].getAttribute("value");
+                    document.getElementsByClassName('playerUsedCards')[currentCardId].classList.add("cardSelected");
+                }
             };
         }
         for(let i = 0; i < players[0].cards.length; i++) {
-            let card = `<div class="player_handCard" value=`+i+` data-tilt data-tilt-reverse="true" data-tilt-max="15" data-tilt-scale="1.2">
+            let card = `<div class="player_handCard" value=`+i+` data-tilt data-tilt-reverse="true" data-tilt-max="20" data-tilt-scale="1.3">
             <img src="/assets/images/cards/`+players[0].cards[i].images+`">
             <label id="cardDefense">`+players[0].cards[i].defence+`</label>
             <span id="cardAttack">`+players[0].cards[i].attack+`</span>
@@ -159,9 +179,13 @@ window.addEventListener('DOMContentLoaded', function () {
                 } else {
                     showMessage('Невозможно отправить сообщение, нет соединения');
                 }
-        };
+            };
         }
         document.getElementById('player_currentStones').innerHTML = players[0].mana;
         document.getElementById('player_currentHealth').innerHTML = players[0].health;
+
+        const script = document.createElement('script');
+        script.src = '/assets/js/vanilla-tilt.js';
+        document.head.append(script);
     }
 });

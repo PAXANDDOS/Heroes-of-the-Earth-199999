@@ -22,6 +22,9 @@ body {
     z-index: 1;
     min-width: 420px;
     backdrop-filter: blur(15px);
+    opacity: 0;
+    animation: fadeInUp 1s ease forwards;
+    animation-delay: calc(var(--order) * 100ms);
 }
 .window h1 {
     font-weight: 500;
@@ -80,6 +83,9 @@ body {
     border-radius: 3px;
     transition: .2s ease;
     transition-property: background-color, color, border, opacity, box-shadow;
+    opacity: 0;
+    animation: dropInUp .5s ease forwards;
+    animation-delay: calc(var(--order) * 200ms);
 }
 .window .profile .buttons form input[type="submit"]:hover {
     background-color: rgba(74, 57, 87, 0.8);
@@ -133,6 +139,9 @@ body {
     color: white;
     font-weight: 500;
     font-size: 1.15em;
+    opacity: 0;
+    animation: dropInUp .5s ease forwards;
+    animation-delay: calc(var(--order) * 200ms);
 }
 .stats .content .data {
     width: 50%;
@@ -146,4 +155,7 @@ body {
     color: white;
     font-weight: 700;
     font-size: 1.15em;
+    opacity: 0;
+    animation: dropInUp .5s ease forwards;
+    animation-delay: calc(var(--order) * 200ms);
 }

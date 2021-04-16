@@ -23,13 +23,13 @@ body {
     min-height: 30vh;
     z-index: 1;
     backdrop-filter: blur(10px);
-    animation: fadeInUp 1s;
+    animation: fadeInUp .4s;
 }
 .window .logo {
     width: 100%;
     display: flex;
     justify-content: center;
-    animation: fadeInUp 1s;
+    animation: fadeInUp .5s;
 }
 .window .logo img {
     width: 200px;
@@ -45,18 +45,18 @@ body {
 }
 .window form input[type="text"] {
     opacity: 0;
-    animation: dropInUp 1s ease forwards;
-    animation-delay: calc(var(--order) * 200ms);
+    animation: dropInUp .5s ease forwards;
+    animation-delay: calc(var(--order) * 50ms);
 }
 .window form input[type="password"] {
     opacity: 0;
-    animation: dropInUp 1s ease forwards;
-    animation-delay: calc(var(--order) * 200ms);
+    animation: dropInUp .5s ease forwards;
+    animation-delay: calc(var(--order) * 50ms);
 }
 .window form input[type="email"] {
     opacity: 0;
-    animation: dropInUp 1s ease forwards;
-    animation-delay: calc(var(--order) * 200ms);
+    animation: dropInUp .5s ease forwards;
+    animation-delay: calc(var(--order) * 50ms);
 }
 .window form input[type="text"], .window form input[type="password"], .window form input[type="email"] {
     background-color: rgba(0, 24, 51, 0.3);
@@ -86,8 +86,8 @@ body {
     justify-content: center;
     align-items: center;
     opacity: 0;
-    animation: dropInUp 1s ease forwards;
-    animation-delay: calc(var(--order) * 200ms);
+    animation: dropInUp .5s ease forwards;
+    animation-delay: calc(var(--order) * 50ms);
 }
 .window form .submit input[type="submit"] {
     width: 100%;
@@ -130,8 +130,8 @@ body {
     transition-property: background-color, color, border, opacity;
     cursor: pointer;
     opacity: 0;
-    animation: dropInUp 1s ease forwards;
-    animation-delay: calc(var(--order) * 200ms);
+    animation: dropInUp .5s ease forwards;
+    animation-delay: calc(var(--order) * 50ms);
 }
 .window .other a:hover {
     color: rgb(0, 146, 237);
