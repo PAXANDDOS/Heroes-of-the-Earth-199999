@@ -13,7 +13,6 @@ class VanillaTilt {
     if (!(element instanceof Node)) {
       throw ("Can't initialize VanillaTilt because " + element + " is not a Node.");
     }
-
     this.width = null;
     this.height = null;
     this.clientWidth = null;
