@@ -1,19 +1,12 @@
 var yes = true;
+var currentCardId = null;
 window.addEventListener('DOMContentLoaded', function () {
 
     var socket;
-
-    // показать сообщение в #socket-info
     function showMessage(message) {
         console.log(message);
-        // var div = document.createElement('div');
-        // div.appendChild(document.createTextNode(message));
-        // document.getElementById('socket-info').appendChild(div);
     }
 
-    /*
-     * Установить соединение с сервером и назначить обработчики событий
-     */
     if(window.location.href.indexOf("board") > -1) {
         // новое соединение открываем, если старое соединение закрыто
         if (socket === undefined || socket.readyState !== 1) {
@@ -22,12 +15,8 @@ window.addEventListener('DOMContentLoaded', function () {
             showMessage('Надо закрыть уже имеющееся соединение');
         }
 
-        /*
-         * четыре функции обратного вызова: одна при получении данных и три – при изменениях в состоянии соединения
-         */
         socket.onmessage = function (event) { // при получении данных от сервера
             let data = event.data;
-            //showMessage('Получено сообщение от сервера: ' + data);
             document.getElementsByClassName('searchScreen')[0].style.display = "none";
             document.getElementById('mainGame').style.display = "block";
             let players = parseToObj(data);
@@ -94,9 +83,23 @@ window.addEventListener('DOMContentLoaded', function () {
         } else {
             showMessage('Невозможно отправить сообщение, нет соединения');
         }
-};
+    };
+
+    document.getElementById('enemyAvatar').onclick = function () {
+        if(currentCardId != null) {
+            if (socket !== undefined && socket.readyState === 1) {
+                let message = attackPlayer(currentCardId);
+                socket.send(message);
+                showMessage('Отправлено сообщение серверу: ' + message);
+            }
+            else {
+                showMessage('Невозможно отправить сообщение, нет соединения');
+            }
+        }
+    };
 
     function render(players) {
+        currentCardId = null;
         document.getElementById('enemyUsername').innerHTML = players[1].playerName;
         document.getElementById('enemyAvatar').src = "/assets/images/avatars/" + players[1].avatar +".jpeg";
         document.getElementById('enemy_currentStones').innerHTML = players[1].mana;
@@ -106,20 +109,37 @@ window.addEventListener('DOMContentLoaded', function () {
             document.getElementsByClassName('enemy_handInner')[0].insertAdjacentHTML('beforeend',card);
         }
         for(let i = 0; i < players[1].usedCards.length; i++) {
-            let card = `<div class="entity_card" data-tilt data-tilt-reverse="true" data-tilt-max="15" data-tilt-scale="1.2">
+            let card = `<div class="entity_card enemyUsedCards" value=`+i+` data-tilt data-tilt-reverse="true" data-tilt-max="15" data-tilt-scale="1.2">
             <img src="/assets/images/cards/`+players[1].usedCards[i].images+`" alt="enemyCard">
             <span id="card_currentAttack">`+players[1].usedCards[i].attack+`</span>
             <span id="card_currentDefense">`+players[1].usedCards[i].defence+`</span>
             </div>`;
             document.getElementsByClassName('enemy_deck')[0].insertAdjacentHTML('beforeend',card);
+            document.getElementsByClassName('enemyUsedCards')[i].onclick = function () {
+                let enemyCard = document.getElementsByClassName('enemyUsedCards')[i].getAttribute("value");
+                if(currentCardId != null) {
+                    if (socket !== undefined && socket.readyState === 1) {
+                        let message = attackCard(currentCardId, enemyCard);
+                        socket.send(message);
+                        showMessage('Отправлено сообщение серверу: ' + message);
+                    }
+                    else {
+                        showMessage('Невозможно отправить сообщение, нет соединения');
+                    }
+                }
+            };
         }
         for(let i = 0; i < players[0].usedCards.length; i++) {
-            let card = `<div class="entity_card" data-tilt data-tilt-reverse="true" data-tilt-max="15" data-tilt-scale="1.2">
+            let card = `<div class="entity_card playerUsedCards" value=`+i+` data-tilt data-tilt-reverse="true" data-tilt-max="15" data-tilt-scale="1.2">
             <img src="/assets/images/cards/`+players[0].usedCards[i].images+`" alt="enemyCard">
             <span id="card_currentAttack">`+players[0].usedCards[i].attack+`</span>
             <span id="card_currentDefense">`+players[0].usedCards[i].defence+`</span>
             </div>`;
             document.getElementsByClassName('player_deck')[0].insertAdjacentHTML('beforeend',card);
+            document.getElementsByClassName('playerUsedCards')[i].onclick = function () {
+                currentCardId = document.getElementsByClassName('playerUsedCards')[i].getAttribute("value");
+                console.log(currentCardId);
+            };
         }
         for(let i = 0; i < players[0].cards.length; i++) {
             let card = `<div class="player_handCard" value=`+i+` data-tilt data-tilt-reverse="true" data-tilt-max="15" data-tilt-scale="1.2">

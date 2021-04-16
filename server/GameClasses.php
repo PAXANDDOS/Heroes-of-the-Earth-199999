@@ -46,9 +46,9 @@
             $alias = ['Black Widow', 'Captain America', 'Dr. Strange', 'Drax', 'Nick Fury', 'Gamora', 
             'Groot', 'Iron-man', 'Loki', 'Nebula', 'Deadpool', 'Rocket', 'Spider-man', 'Star-Lord', 'Thanos', 
             'Thor', 'Vision', 'Wanda Maximoff', 'Winter Soldier', 'Yondu'];
-            $attack = [3, 4, 5, 5, 3, 2, 4, 6, 3, 3, 4, 4, 5, 4, 8, 7, 4, 6, 5, 4];
-            $defence = [3, 7, 5, 5, 3, 3, 5, 6, 4, 3, 8, 2, 3, 3, 8, 5, 3, 4, 5, 3];
-            $cost = [1, 2, 3, 3, 1, 1, 2, 3, 2, 2, 1, 5, 2, 2, 2, 6, 4, 2, 4, 3];
+            $attack =   [1, 2, 3, 5, 2, 1, 3, 4, 3, 4, 1, 3, 5, 1, 6, 7, 4, 3, 5, 2];
+            $defence =  [3, 3, 4, 4, 2, 3, 2, 9, 2, 1, 8, 7, 2, 4, 7, 4, 5, 3, 5, 5];
+            $cost =     [1, 2, 3, 4, 1, 1, 2, 6, 2, 2, 4, 5, 3, 2, 6, 5, 4, 2, 4, 3];
             $images = ['blackWidow.png', 'captainAmerica.png', 'doctor.png', 'drax.png', 'fury.png', 'gamora.png',
             'groot.png', 'iron.png', 'loki.png', 'nebula.png', 'pool.png', 'rocket.png', 'spider.png', 'starLord.png',
             'thanos.png', 'thor.png', 'vision.png', 'wanda.png', 'winter.png', 'yondu.png'];
@@ -94,10 +94,8 @@
 
         public function DropCard($index)
         {
-            echo "hyi pizda";
             if($this->cards[$index]->cost <= $this->mana)
             {
-                echo "asdasdkjjasfjdsfalkj";
                 $this->mana -= $this->cards[$index]->cost;
                 $this->usedCards[] = $this->cards[$index];
                 array_splice($this->cards, $index, 1);
@@ -109,8 +107,8 @@
             $card = $this->usedCards[$index];
             if($card->canAtack)
             {
-                $enemy->usedCards[$indexCardToAtack]->defence -= $card->atack;
-                $card->defence -= $enemy->usedCards[$indexCardToAtack]->atack;
+                $enemy->usedCards[$indexCardToAtack]->defence -= $card->attack;
+                $card->defence -= $enemy->usedCards[$indexCardToAtack]->attack;
 
                 $card->canAtack = false;
 
@@ -118,7 +116,7 @@
                     array_splice($this->usedCards, $index, 1);
 
                 if($enemy->usedCards[$indexCardToAtack]->defence <= 0)
-                    array_splice($enemy->usedCards, $indexCardToAtack);
+                    array_splice($enemy->usedCards, $indexCardToAtack, 1);
             }
         }
 
@@ -127,7 +125,7 @@
             $card = $this->usedCards[$index];
             if($card->canAtack)
             {
-                $player->health -= $card->atack;
+                $player->health -= $card->attack;
                 if($player->health <= 0)
                 {
                     $player->health = 0;

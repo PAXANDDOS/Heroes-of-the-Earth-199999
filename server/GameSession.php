@@ -66,7 +66,6 @@ class GameSession
         socket_set_nonblock($this->client1);
 
         $turn = rand(0, 2);
-        $turn = 0;
 
         if($turn == 0)
         {
@@ -193,7 +192,7 @@ class GameSession
                 $cardIndex = (json_decode($data['payload']))->indexOfCard;
                 $cardToAtackIndex = (json_decode($data['payload']))->indexCardToAttack;
 
-                $currentPlayer->AtackPlayer($cardIndex, $cardToAtackIndex, $enemyPlayer);
+                $currentPlayer->TryToAtackCard($cardIndex, $cardToAtackIndex, $enemyPlayer);
 
                 $this->SendPlayersInfoToBothClients();
             }

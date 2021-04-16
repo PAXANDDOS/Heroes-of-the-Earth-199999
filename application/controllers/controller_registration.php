@@ -39,7 +39,7 @@ function registrate($class, $data, $username, $name, $email, $password, $conpass
 	}
 
 
-	$directory = getcwd()."/assets/images/cards/";
+	$directory = getcwd()."/assets/images/avatars/";
 	$filecount = 0;
 	$files2 = glob( $directory ."*" );
 	if( $files2 )
