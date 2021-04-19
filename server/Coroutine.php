@@ -136,7 +136,6 @@ class Scheduler
 
 function newTask(Generator $coroutine) 
 {
-    echo "new task";
     return new SystemCall(
         function(Task $task, Scheduler $scheduler) use ($coroutine) 
         {
@@ -165,29 +164,3 @@ function getTaskId()
         $scheduler->schedule($task);
     });
 }
-
-/*function childTask() 
-{
-    $tid = (yield getTaskId());
-    while (true) 
-    {
-        echo "Child task $tid still alive!\n";
-        yield;
-    }
-}
-
-function task() {
-    $tid = (yield getTaskId());
-    $childTid = (yield newTask(childTask()));
-
-    for ($i = 1; $i <= 6; ++$i) {
-        echo "Parent task $tid iteration $i.\n";
-        yield;
-
-        if ($i == 3) yield killTask($childTid);
-    }
-}
-
-$scheduler = new Scheduler;
-$scheduler->newTask(task());
-$scheduler->run();*/

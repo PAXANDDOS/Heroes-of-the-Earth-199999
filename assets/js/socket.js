@@ -10,7 +10,7 @@ window.addEventListener('DOMContentLoaded', function () {
     if(window.location.href.indexOf("board") > -1) {
         // новое соединение открываем, если старое соединение закрыто
         if (socket === undefined || socket.readyState !== 1) {
-            socket = new WebSocket("ws://10.11.8.5:5656");
+            socket = new WebSocket("ws://paxanddos.ddns.net:5656");
         } else {
             showMessage('Надо закрыть уже имеющееся соединение');
         }
@@ -20,7 +20,7 @@ window.addEventListener('DOMContentLoaded', function () {
             document.getElementsByClassName('searchScreen')[0].style.display = "none";
             document.getElementById('mainGame').style.display = "block";
             let players = parseToObj(data);
-            console.log(players);
+            //console.log(players);
             if(yes) {
                 render(players);
                 yes = false;
@@ -44,17 +44,6 @@ window.addEventListener('DOMContentLoaded', function () {
                 
                 item = document.querySelector('head');
                 item.removeChild(item.lastChild);
-
-                if(players[0].canPlay == false) {
-                    document.getElementById('endturn').style.backgroundImage = "url('/assets/images/enemyTurn.png')";
-                    document.getElementsByClassName('player_board')[0].style.filter = "brightness(0.7)";
-                    document.getElementsByClassName('player_board')[0].style.webkitFilter = "brightness(0.7)";
-                }
-                else {
-                    document.getElementById('endturn').style.backgroundImage = "url('/assets/images/endturn.png')";
-                    document.getElementsByClassName('player_board')[0].style.filter = "brightness(1)";
-                    document.getElementsByClassName('player_board')[0].style.webkitFilter = "brightness(1)";
-                }
 
                 render(players);
             }
@@ -113,6 +102,17 @@ window.addEventListener('DOMContentLoaded', function () {
     };
 
     function render(players) {
+        if(players[0].canPlay == false) {
+            document.getElementById('endturn').style.backgroundImage = "url('/assets/images/enemyTurn.png')";
+            document.getElementsByClassName('player_board')[0].style.filter = "brightness(0.7)";
+            document.getElementsByClassName('player_board')[0].style.webkitFilter = "brightness(0.7)";
+        }
+        else {
+            document.getElementById('endturn').style.backgroundImage = "url('/assets/images/endturn.png')";
+            document.getElementsByClassName('player_board')[0].style.filter = "brightness(1)";
+            document.getElementsByClassName('player_board')[0].style.webkitFilter = "brightness(1)";
+        }
+
         currentCardId = null;
         document.getElementById('enemyUsername').innerHTML = players[1].playerName;
         document.getElementById('enemyAvatar').src = "/assets/images/avatars/" + players[1].avatar +".jpeg";
@@ -169,7 +169,6 @@ window.addEventListener('DOMContentLoaded', function () {
             <span id="cardCost">`+players[0].cards[i].cost+`</span>
             </div>`;
             document.getElementsByClassName('player_handInner')[0].insertAdjacentHTML('beforeend',card);
-            // Отправка сообщения серверу
             document.getElementsByClassName('player_handCard')[i].onclick = function () {
                 if (socket !== undefined && socket.readyState === 1) {
                     let message = dropCard(document.getElementsByClassName('player_handCard')[i].getAttribute("value"));
