@@ -2,6 +2,7 @@
 
 include_once "GameClasses.php";
 
+
 class GameSession
 {
     private $client0;
@@ -34,8 +35,9 @@ class GameSession
         $this->deck->createDeck();
         $this->deck->shuffleDeck();
 
-        $this->player0->cards = array_slice($this->deck->cards, 0, 10);
-        $this->player1->cards = array_slice($this->deck->cards, 10, 20);
+        $this->player0->cards = array_slice($this->deck->cards, 0, 5);
+        $this->player1->cards = array_slice($this->deck->cards, 5, 10);
+        array_splice($this->deck->cards, -1, 10);
 
         $this->RandomizeTurn();
         
