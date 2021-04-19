@@ -1,7 +1,6 @@
 <?php
 
-include_once "GameCLasses.php";
-include_once 'application/controllers/controller_database.php';
+include_once "GameClasses.php";
 
 class GameSession
 {
