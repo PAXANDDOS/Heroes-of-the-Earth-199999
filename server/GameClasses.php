@@ -10,38 +10,16 @@
             $this->canAtack = false;
             $this->images = $images;
         }
-
-        function getAl()
-        {
-            return $this->alias;
-        }
-        function getAt()
-        {
-            return $this->attack;
-        }
-        function getDe()
-        {
-            return $this->defence;
-        }
-        function getCo()
-        {
-            return $this->cost;
-        }
-        function getIm()
-        {
-            return $this->images;
-        }
-
     }
     
     class Deck 
     {
-        function __construct() 
+        public function __construct() 
         {
             $this->cards = [];
         }
     
-        function createDeck() 
+        public function createDeck() 
         {
             $alias = ['Black Widow', 'Captain America', 'Dr. Strange', 'Drax', 'Nick Fury', 'Gamora', 
             'Groot', 'Iron-man', 'Loki', 'Nebula', 'Deadpool', 'Rocket', 'Spider-man', 'Star-Lord', 'Thanos', 
@@ -56,9 +34,21 @@
                 array_push($this->cards, new Card($alias[$i], $attack[$i], $defence[$i], $cost[$i], $images[$i]));
         }
 
-        function shuffleDeck() 
+        public function shuffleDeck() 
         {
             shuffle($this->cards);
+        }
+
+        public function PickCards($count)
+        {
+            if($count <= count($this->cards))
+            {
+                $cards = array_slice($this->cards, -1, $count);
+                array_splice($this->cards, -1, $count);
+
+                return $cards;
+            }
+            return null;
         }
     }
 
@@ -82,7 +72,7 @@
             $this->mana = 1;
             $this->currentMana = 1;
             $this->usedCards = [];
-            $this->canPlay;
+            $this->canPlay = true;
             $this->maxMana = 6;
             $this->avatar = $avatar;
         }
@@ -135,5 +125,27 @@
 
                 $card->canAtack = false;
             }
-    }
-    }
+        }
+
+        public function UpdateManaCount()
+        {
+            if($this->currentMana < $this->maxMana)
+                $this->currentMana++;
+            $this->mana = $this->currentMana;
+        }
+
+        public function UpdateCardAttack()
+        {
+            foreach($this->usedCards as $card)
+                $card->canAtack = true;
+        }
+
+        public function TryPickCardsFromDeck($deck)
+        {
+            $countOfNewCards = $this->maxPlayerCardsCount - count($this->cards);
+            $newCards = $this->deck->PickCards($countOfNewCards);
+            
+            if($newCards != null)
+                $this->cards[] = $newCards;
+        }
+}
