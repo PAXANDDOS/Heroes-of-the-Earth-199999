@@ -45,17 +45,6 @@ window.addEventListener('DOMContentLoaded', function () {
                 item = document.querySelector('head');
                 item.removeChild(item.lastChild);
 
-                if(players[0].canPlay == false) {
-                    document.getElementById('endturn').style.backgroundImage = "url('/assets/images/enemyTurn.png')";
-                    document.getElementsByClassName('player_board')[0].style.filter = "brightness(0.7)";
-                    document.getElementsByClassName('player_board')[0].style.webkitFilter = "brightness(0.7)";
-                }
-                else {
-                    document.getElementById('endturn').style.backgroundImage = "url('/assets/images/endturn.png')";
-                    document.getElementsByClassName('player_board')[0].style.filter = "brightness(1)";
-                    document.getElementsByClassName('player_board')[0].style.webkitFilter = "brightness(1)";
-                }
-
                 render(players);
             }
         }
@@ -113,6 +102,17 @@ window.addEventListener('DOMContentLoaded', function () {
     };
 
     function render(players) {
+        if(players[0].canPlay == false) {
+            document.getElementById('endturn').style.backgroundImage = "url('/assets/images/enemyTurn.png')";
+            document.getElementsByClassName('player_board')[0].style.filter = "brightness(0.7)";
+            document.getElementsByClassName('player_board')[0].style.webkitFilter = "brightness(0.7)";
+        }
+        else {
+            document.getElementById('endturn').style.backgroundImage = "url('/assets/images/endturn.png')";
+            document.getElementsByClassName('player_board')[0].style.filter = "brightness(1)";
+            document.getElementsByClassName('player_board')[0].style.webkitFilter = "brightness(1)";
+        }
+
         currentCardId = null;
         document.getElementById('enemyUsername').innerHTML = players[1].playerName;
         document.getElementById('enemyAvatar').src = "/assets/images/avatars/" + players[1].avatar +".jpeg";
