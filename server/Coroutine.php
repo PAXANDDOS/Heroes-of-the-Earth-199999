@@ -136,7 +136,6 @@ class Scheduler
 
 function newTask(Generator $coroutine) 
 {
-    echo "new task";
     return new SystemCall(
         function(Task $task, Scheduler $scheduler) use ($coroutine) 
         {

@@ -36,8 +36,8 @@ class GameSession
         $this->deck->shuffleDeck();
 
         $this->player0->cards = array_slice($this->deck->cards, 0, 5);
-        $this->player1->cards = array_slice($this->deck->cards, 5, 10);
-        array_splice($this->deck->cards, -1, 10);
+        $this->player1->cards = array_slice($this->deck->cards, 5, 5);
+        array_splice($this->deck->cards, 0, 10);
 
         $this->RandomizeTurn();
         
@@ -85,12 +85,18 @@ class GameSession
             }
 
             $data = SocketServer::decode($sockStr);
-            if(!isset($data['payload'])) 
+            if($data == null || !isset($data['payload']))
+            {
                 yield;
+                continue;
+            }     
 
             $json = json_decode($data['payload']);
-            if(!isset($json->nameOfOperation)) 
+            if($json == null) 
+            {
                 yield;
+                continue;
+            } 
 
             $nameOfOperation = $json->nameOfOperation;
             if($nameOfOperation == 'changeTurn')
@@ -153,7 +159,7 @@ class GameSession
 
         $currentPlayer->UpdateManaCount();
         $currentPlayer->UpdateCardAttack();
-        $currentPlayer->TryPickCardsFromDeck();
+        $currentPlayer->TryPickCardsFromDeck($this->deck);
     }
 
     private function RandomizeTurn()

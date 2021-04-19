@@ -132,7 +132,7 @@
     font-weight: 600;
     position: absolute;
     margin-right: -96px;
-    margin-top: 154px;
+    margin-top: 115px;
     font-size: 1.1em;
 }
 .player_hand .player_handInner .player_handCard span#cardAttack {
@@ -141,7 +141,7 @@
     font-weight: 500;
     position: absolute;
     margin-left: -90px;
-    margin-top: 154px;
+    margin-top: 115px;
     font-size: 1.1em;
 }
 .player_hand .player_handInner .player_handCard span#cardCost {

@@ -14,6 +14,7 @@
     
     class Deck 
     {
+        public $cards;
         public function __construct() 
         {
             $this->cards = [];
@@ -40,15 +41,14 @@
         }
 
         public function PickCards($count)
-        {
+        { 
             if($count <= count($this->cards))
             {
-                $cards = array_slice($this->cards, -1, $count);
-                array_splice($this->cards, -1, $count);
+                $cards = array_slice($this->cards, count($this->cards) - $count - 2, $count);
+                array_splice($this->cards, count($this->cards) - $count - 2, $count);
 
                 return $cards;
             }
-            return null;
         }
     }
 
@@ -61,6 +61,7 @@
         public $maxMana;
         public $cards = array();
         public $usedCards = array();
+        public $maxPlayerCardsCount;
 
         public $status = 'play';
         public $canPlay;
@@ -75,6 +76,7 @@
             $this->canPlay = true;
             $this->maxMana = 6;
             $this->avatar = $avatar;
+            $this->maxPlayerCardsCount = 5;
         }
 
         public function setCards($cards)
@@ -143,9 +145,10 @@
         public function TryPickCardsFromDeck($deck)
         {
             $countOfNewCards = $this->maxPlayerCardsCount - count($this->cards);
-            $newCards = $this->deck->PickCards($countOfNewCards);
+            if($countOfNewCards !== 0)
+                $newCards = $deck->PickCards($countOfNewCards);
             
-            if($newCards != null)
-                $this->cards[] = $newCards;
+            if(isset($newCards)) 
+                $this->cards = array_merge($this->cards, $newCards);
         }
 }
