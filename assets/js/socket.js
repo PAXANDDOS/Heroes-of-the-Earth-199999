@@ -20,7 +20,7 @@ window.addEventListener('DOMContentLoaded', function () {
             document.getElementsByClassName('searchScreen')[0].style.display = "none";
             document.getElementById('mainGame').style.display = "block";
             let players = parseToObj(data);
-            console.log(players);
+            //console.log(players);
             if(yes) {
                 render(players);
                 yes = false;
@@ -162,7 +162,6 @@ window.addEventListener('DOMContentLoaded', function () {
             };
         }
         for(let i = 0; i < players[0].cards.length; i++) {
-            console.log(players[0].cards[i].defence, players[0].cards[i].attack);
             let card = `<div class="player_handCard" value=`+i+` data-tilt data-tilt-reverse="true" data-tilt-max="20" data-tilt-scale="1.3">
             <img src="/assets/images/cards/`+players[0].cards[i].images+`">
             <label id="cardDefense">`+players[0].cards[i].defence+`</label>
