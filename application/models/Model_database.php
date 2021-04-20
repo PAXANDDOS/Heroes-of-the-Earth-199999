@@ -31,7 +31,7 @@ abstract class Model_database
     abstract public function save();
     abstract public function delete();
     abstract public function checkPass($username, $password);
-    abstract public function renew();
+    abstract public function renew($email);
     abstract public function update($username, $name, $email, $password);
     abstract public function getAvatar($username);
     abstract public function getTotalGames($username);

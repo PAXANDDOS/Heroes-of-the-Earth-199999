@@ -71,17 +71,18 @@ class User extends Model_database {
             $stmt->execute();
         }
     }
-    public function renew()
+    public function renew($email)
     {
         if ($this->connection->getConnectionStatus()) {
-            $result = $this->connection->connection->query("SELECT * FROM $this->table WHERE username='$this->username'");
+            $result = $this->connection->connection->query("SELECT * FROM $this->table WHERE email='$email'");
             $pdo = $result->fetch(PDO::FETCH_ASSOC);
-            $email = $pdo['email'];
-            $pass = substr($pdo['password'], 0, 9);
-            $passHash = md5($pass);
-            $text = "\nYou have requested a renewal of your password.\nDo not give your password to anyone!\n\nYour new password is $pass\n\nDon't lose it anymore;)\n";
-            mail($email, "Password reminder.", $text);
-            $this->update($pdo['username'], $pdo['name'], $pdo['email'], $passHash);
+            if(isset($pdo)) {
+                $pass = substr($pdo['password'], 0, 9);
+                $passHash = md5($pass);
+                $text = "\nHello hero! You have requested a renewal of your password.\nDo not give your password to anyone!\n\nYour new password is $pass\n\nDon't lose it anymore;)\n";
+                mail($email, "Password reminder.", $text);
+                $this->update($pdo['username'], $pdo['name'], $email, $passHash);
+            }
         }
     }
     public function update($username, $name, $email, $password)

@@ -24,8 +24,7 @@ function remind($class, $data, $email)
 		return;
 	}
 
-	$heroes->email = $email;
-	$heroes->renew();
+	$heroes->renew($email);
 	$data = array(
 		"action" => 'New password was sent to '.$email.'!'
 	);
