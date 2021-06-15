@@ -51,7 +51,7 @@ abstract class Model_database
         $this->table = $table;
     }
     protected function setConnection() {
-        $this->connection = new DatabaseConnection('localhost', 3306, 'root', '', 'marvel_heroes');
+        $this->connection = new DatabaseConnection('f80b6byii2vwv8cx.chr7pe7iynqr.eu-west-1.rds.amazonaws.com', 3306, 'vf75jiigu4hzkwjx', 'daloesp0k41ujgww', 'pt868j35sg9idsod');
     }
 }
 
