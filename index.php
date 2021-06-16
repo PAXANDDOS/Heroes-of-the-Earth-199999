@@ -4,7 +4,7 @@ include_once "GameSession.php";
 include_once "Coroutine.php";
 
 set_time_limit(0);
-$sock = new SocketServer('0.0.0.0', 80, 20);
+$sock = new SocketServer('localhost', 80, 20);
 
 
 $sock->listen();
