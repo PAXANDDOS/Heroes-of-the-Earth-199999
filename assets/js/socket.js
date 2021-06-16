@@ -10,7 +10,7 @@ window.addEventListener('DOMContentLoaded', function () {
     if(window.location.href.indexOf("board") > -1) {
         // новое соединение открываем, если старое соединение закрыто
         if (socket === undefined || socket.readyState !== 1) {
-            socket = new WebSocket("ws://hoe-server.herokuapp.com");
+            socket = new WebSocket("wss://hoe-server.herokuapp.com");
         } else {
             showMessage('Надо закрыть уже имеющееся соединение');
         }
